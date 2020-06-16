@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Group {
+public class Group {//小组类
     private Integer gid;
     private String gname;
     private List<Employee> emps;
