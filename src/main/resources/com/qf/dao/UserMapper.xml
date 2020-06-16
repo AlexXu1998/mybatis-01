@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.dao.UserMapper">
+
+    <sql id="selectUser"><!--sql语句片段-->
+        select id,username,birthday,sex,address from user
+    </sql>
+
+    <select id="findAll" resultType="com.qf.popj.User">
+        select * from user
+    </select>
+
+    <select id="findByUserName" resultType="com.qf.popj.User">
+        <include refid="selectUser"></include>
+        <where>    <!-- WHERE，ruo会自动忽略前后缀（如：and | or） -->
+            <if test="username != null">  <!-- test中的是，判断传入的变量不为null时，添加if中的语句 -->
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUser">
+        UPDATE user
+        <set>    <!-- set子句中满足条件的if，会自动忽略后缀（如：,） -->
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="address != null">
+                address = #{address}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+
+
+    <select id="findByUserNameAndSex_trim" resultType="com.qf.popj.User">
+        <include refid="selectUser"></include>
+        <trim prefix="where" prefixOverrides="and|or"><!-- 增加WHERE前缀，自动忽略前缀 -->
+            <if test="username != null">
+                username = #{username}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateUser_trim">
+        update user
+        <trim prefix="set" suffixOverrides=","><!-- 增加SET前缀，自动忽略后缀 -->
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="birthDay != null">
+                birthday = #{birthDay},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="address != null">
+                address = #{address}
+            </if>
+        </trim>
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+
+    <select id="findAllById" resultType="com.qf.popj.User">
+        <include refid="selectUser"></include>
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" index="i">
+            #{id}
+        </foreach><!-- select * from t_user where id in ( ? , ? , ? ......) -->
+    </select>
+
+</mapper>

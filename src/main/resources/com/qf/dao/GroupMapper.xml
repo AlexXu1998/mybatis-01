@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.GroupMapper">
+    <resultMap id="groupResultMap" type="com.qf.popj.Group">
+        <id property="gid" column="gid"></id>
+        <result property="gname" column="gname"/>
+        <!-- column="传入目标方法的条件参数"  select="及联调用的查询目标"-->
+        <collection property="emps" ofType="com.qf.popj.Employee" column="gid"
+                    select="com.qf.dao.EmpMapper.selectEmployeeByGid" />
+    </resultMap>
+    <select id="selectGroupById" resultMap="groupResultMap">
+        select * from t_group where gid = #{gid}
+    </select>
+</mapper>
