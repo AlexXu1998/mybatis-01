@@ -6,11 +6,11 @@
 <mapper namespace="com.qf.dao.UserMapper">
 
     <sql id="selectUser"><!--sql语句片段-->
-        select id,username,birthday,sex,address from user
+        select id,username,birthday,sex,address from mybatislearn_user
     </sql>
 
     <select id="findAll" resultType="com.qf.popj.User">
-        select * from user
+        select * from mybatislearn_user
     </select>
 
     <select id="findByUserName" resultType="com.qf.popj.User">
@@ -23,7 +23,7 @@
     </select>
 
     <update id="updateUser">
-        UPDATE user
+        UPDATE mybatislearn_user
         <set>    <!-- set子句中满足条件的if，会自动忽略后缀（如：,） -->
             <if test="username != null">
                 username = #{username},
@@ -53,7 +53,7 @@
     </select>
 
     <update id="updateUser_trim">
-        update user
+        update mybatislearn_user
         <trim prefix="set" suffixOverrides=","><!-- 增加SET前缀，自动忽略后缀 -->
             <if test="username != null">
                 username = #{username},
@@ -80,7 +80,7 @@
         where id in
         <foreach collection="list" open="(" close=")" separator="," item="id" index="i">
             #{id}
-        </foreach><!-- select * from t_user where id in ( ? , ? , ? ......) -->
+        </foreach><!-- select * from mybatislearn_t_user where id in ( ? , ? , ? ......) -->
     </select>
 
 </mapper>

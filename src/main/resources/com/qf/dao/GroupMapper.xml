@@ -11,6 +11,6 @@
                     select="com.qf.dao.EmpMapper.selectEmployeeByGid" />
     </resultMap>
     <select id="selectGroupById" resultMap="groupResultMap">
-        select * from t_group where gid = #{gid}
+        select * from mybatislearn_t_group where gid = #{gid}
     </select>
 </mapper>
